@@ -1,5 +1,6 @@
-package com.phonebook.tests;
+package com.phonebook.fw;
 
+import com.phonebook.models.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -32,5 +33,13 @@ public class UserHelper  extends BaseHelper{
 
     public void clickOnLoginButton() {
         click(By.name("login"));
+    }
+
+    public boolean isLoginLinkPresent() {
+        return isElementPresent(By.cssSelector("[href='/login']"));
+    }
+
+    public void clickOnSignOutButton() {
+        click(By.xpath("//button[.='Sign Out']"));
     }
 }

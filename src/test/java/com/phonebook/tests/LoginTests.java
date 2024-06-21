@@ -1,17 +1,47 @@
 package com.phonebook.tests;
 
+import com.phonebook.data.UserData;
+import com.phonebook.models.User;
 import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 public class LoginTests  extends TestBase{
-    @Test
+
+//    @BeforeClass
+//    public void BeforeClassPrecondition(){
+//        System.out.println("Before class");
+//    }
+//
+//    @BeforeTest
+//    public void beforeTestPrecondition(){
+//        System.out.println("Before Test");
+//    }
+
+
+
+    @BeforeMethod
+    public void ensurePrecondition(){
+        if(!app.getUser().isLoginLinkPresent()){
+            app.getUser().clickOnSignOutButton();
+
+        }
+    }
+
+//    @AfterClass
+//    public void afterTestPostCondition(){
+//        System.out.println("After Test");
+//    }
+
+
+    @Test(priority = 1)
     public void loginPositiveTest(){
 
+        logger.info("Login with data --> " + UserData.EMAIL + "***" + UserData.PASSWORD);
         app.getUser().clickOnLoginLink();
 
         app.getUser().fillRegisterLoginForm(new User()
-                .setEmail("afal33@gmail.com")
-                .setPassword( "Alina2024$"));
+                .setEmail(UserData.EMAIL)
+                .setPassword(UserData.PASSWORD));
 
         app.getUser().clickOnLoginButton();
 
@@ -20,12 +50,12 @@ public class LoginTests  extends TestBase{
 
 
     }
-    @Test
+    @Test(priority = 2)
     public void loginNegativeWithoutEmailTest(){
 
         app.getUser().clickOnLoginLink();
 
-        app.getUser().fillRegisterLoginForm(new User().setPassword("Alina2024$"));
+        app.getUser().fillRegisterLoginForm(new User().setPassword(UserData.PASSWORD));
 
         app.getUser().clickOnLoginButton();
 

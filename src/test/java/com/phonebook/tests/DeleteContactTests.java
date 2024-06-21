@@ -1,5 +1,9 @@
 package com.phonebook.tests;
 
+import com.phonebook.data.ContactData;
+import com.phonebook.data.UserData;
+import com.phonebook.models.Contact;
+import com.phonebook.models.User;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -9,22 +13,26 @@ public class DeleteContactTests extends TestBase{
     @BeforeMethod
     public void precondition(){
 
+        if(!app.getUser().isLoginLinkPresent()){
+            app.getUser().clickOnSignOutButton();
+
+        }
+
         app.getUser().clickOnLoginLink();
 
         app.getUser().fillRegisterLoginForm(new User()
-                .setEmail("afal33@gmail.com")
-                .setPassword( "Alina2024$"));
+                .setEmail(UserData.EMAIL)
+                .setPassword(UserData.PASSWORD));
         app.getUser().clickOnLoginButton();
 
         app.getContact().clickOnAddLink();
         app.getContact().fillAddContactForm(new Contact()
-                .setName("Alinas")
-                .setLastName("Afo")
-                .setPhone( "1234567890")
-                .setEmail( "afal33@gmail.com")
-                .setAddress("Berlin")
-                .setDescription("Nurse"));
-        app.getContact().clickOnSaveButton();
+                .setName(ContactData.NAME)
+                .setLastName(ContactData.LAST_NAME)
+                .setPhone(ContactData.PHONE)
+                .setEmail(ContactData.EMAIL)
+                .setAddress(ContactData.ADDRESS)
+                .setDescription(ContactData.DESC));
         app.getContact().clickOnSaveButton();
 
     }
@@ -36,7 +44,7 @@ public class DeleteContactTests extends TestBase{
         int sizeBefore = app.getContact().sizeOfContacts();
         //click on Card
         app.getContact().removeContact();
-        app.getContact().pause(500);
+        app.getContact().pause(1000);
         //get size of contacts after delete
         int sizeAfter = app.getContact().sizeOfContacts();
         //compare size before and size after with assert
